@@ -2,7 +2,7 @@
 
 A beautiful, responsive weather application built with React that shows current weather and 5-day forecasts for cities worldwide.
 
-![Weather App Screenshot](./src/assets/WeatherAppSS.png) *(You'll need to add a screenshot)*
+![Weather App Screenshot](./src/assets/WeatherAppSS.png)
 
 ## ✨ Features
 
