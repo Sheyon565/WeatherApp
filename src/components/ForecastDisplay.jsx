@@ -1,7 +1,7 @@
 export default function ForecastDisplay({ forecast }) {
     return (
-        <div>
-            <h2 className="text-xl font-bold mb-4">
+        <div className="mt-8">
+            <h2 className="text-2xl font-bold mb-6 text-gray-800 border-b-2 border-gray-200 pb-2">
                 5-Day Forecast
             </h2>
             <ForecastDetails forecast={forecast} />
@@ -11,20 +11,28 @@ export default function ForecastDisplay({ forecast }) {
 
 function ForecastDetails({ forecast }) {
     return (
-        <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 justify-items-ceter" >
+        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-4">
             {forecast && forecast.map((item, index) => {
                 const day = new Date(item.dt * 1000).toLocaleDateString('en', { weekday: 'short' })
                 return (
                     <div key={index}
-                        className="flex flex-col justify-between p-4 gap-3 bg-white/50 rounded-lg rounded-xl shadow-md hover:shadow-xl transition-shadow items-center"
+                        className="bg-white/80 backdrop-blur-sm rounded-xl shadow-md 
+                                 hover:shadow-xl transition-all duration-300
+                                 p-4 flex flex-col items-center
+                                 border border-gray-100"
                     >
-                        <p className="self-start">{day}</p>
+                        <p className="font-semibold text-gray-700 mb-2">{day}</p>
                         <img
-                            src={`https://openweathermap.org/img/wn/${item.weather[0].icon}@4x.png`}
+                            src={`https://openweathermap.org/img/wn/${item.weather[0].icon}@2x.png`}
                             alt={item.weather[0].description}
-                            className="bg-teal-500 rounded-full w-24 h-24"
+                            className="w-16 h-16 md:w-20 md:h-20 mb-2"
                         />
-                        <p className="text-lg font-semibold self-start">{item.main.temp} &deg;C</p>
+                        <p className="text-xl font-bold text-gray-800">
+                            {Math.round(item.main.temp)}°C
+                        </p>
+                        <p className="text-xs text-gray-500 capitalize mt-1">
+                            {item.weather[0].description}
+                        </p>
                     </div>
                 )
             })}

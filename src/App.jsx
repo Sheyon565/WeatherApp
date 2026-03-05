@@ -47,36 +47,41 @@ function App() {
     }, [submitedCity])
 
     return (
-        <div
-            className="md:p-10 min-h-screen">
-            <div className="flex items-center flex-col p-5 gap-3 min-w-full">
-                <SearchForm onSubmit={setSubmitedCity} />
+        <div className="min-h-screen bg-gray-50">
+            <div className="container mx-auto px-4 py-6 md:py-5 max-w-6xl">
+                <div className="md:p-10 min-h-screen">
+                    <div className="flex items-center flex-col gap-6 w-full">
+                        <SearchForm onSubmit={setSubmitedCity} />
 
-                {loading && (
-                    <div className="flex items-center justify-center p-4">
-                        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-500"></div>
-                        <p className="ml-2">
-                            Fetching Weather...
-                        </p>
+                        {loading && (
+                            <div className="flex items-center justify-center p-4">
+                                <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-500"></div>
+                                <p className="ml-2 text-gray-600">
+                                    Fetching Weather...
+                                </p>
+                            </div>
+                        )}
+                        {weather && !error ? (
+                            <div className="w-full max-w-4xl space-y-6">
+                                <WeatherDisplay weather={weather} bgColor={getBgColor(weather)} />
+                                <ForecastDisplay forecast={forecast} />
+                            </div>
+                        ) : error ?
+                            (
+                                <div className="bg-red-50 border border-red-200 rounded-lg p-4 text-center">
+                                    <p className="text-red-600">❌ {error === 'city not found' ? 'City not found. Please check spelling' : error}</p>
+                                </div>
+                            ) :
+                            (
+                                <div className="text-center py-12">
+                                    <p className="text-gray-400 text-lg">
+                                        🔍 Search for a city to see weather
+                                    </p>
+                                </div>
+                            )
+                        }
                     </div>
-                )}
-                {weather && !error ? (
-                    <div className="flex flex-col gap-2">
-                        <WeatherDisplay weather={weather} bgColor={getBgColor(weather)} />
-                        <ForecastDisplay forecast={forecast} />
-                    </div>
-                ) : error ?
-                    (
-                        <div>
-                            <p>❌ {error === 'city not found' ? 'City not found. Please check spelling' : error}</p>
-                        </div>
-                    ) :
-                    (
-                        <p className="text-gray-500">
-                            🔍 Search for a city to see weather
-                        </p>
-                    )
-                }
+                </div>
             </div>
         </div>
     )
