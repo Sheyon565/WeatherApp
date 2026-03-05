@@ -2,7 +2,7 @@
 
 A beautiful, responsive weather application built with React that shows current weather and 5-day forecasts for cities worldwide.
 
-![Weather App Screenshot](./src/assets/WeatherAppSS.png)
+![Weather App Screenshot](./src/assets/WeatherAppSS1.png)
 
 ## ✨ Features
 
@@ -24,6 +24,9 @@ A beautiful, responsive weather application built with React that shows current 
 ## 🚀 Live Demo
 
 [View Live Demo](https://weatherapps-sheyon.netlify.app/)
+
+## ScreenShoot
+(./src/assets/WeatherAppSS2.png)
 
 ## 🏗️ Installation & Setup
 
