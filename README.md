@@ -26,7 +26,7 @@ A beautiful, responsive weather application built with React that shows current 
 [View Live Demo](https://weatherapps-sheyon.netlify.app/)
 
 ## ScreenShoot
-[WeatherAppWorkingScreenShoot](./src/assets/WeatherAppSS2.png)
+![WeatherAppWorkingScreenShoot](./src/assets/WeatherAppSS2.png)
 
 ## 🏗️ Installation & Setup
 
