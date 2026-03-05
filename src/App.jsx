@@ -3,6 +3,7 @@ import './App.css'
 import WeatherDisplay from './components/WeatherDisplay.jsx'
 import SearchForm from './components/SearchForm.jsx'
 import ForecastDisplay from './components/ForecastDisplay.jsx'
+import SearchesDisplay from './components/SearchesDisplay.jsx'
 
 function App() {
     const [submitedCity, setSubmitedCity] = useState('')
@@ -10,6 +11,8 @@ function App() {
     const [error, setError] = useState(null);
     const [loading, setLoading] = useState(false);
     const [forecast, setForecast] = useState(null);
+    const [recentSearches, setRecentSearches] = useState([]);
+
     const KEY = import.meta.env.VITE_WEATHER_API_KEY;
     const apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${submitedCity}&appid=${KEY}&units=metric`;
     const forecastApi = `https://api.openweathermap.org/data/2.5/forecast?q=${submitedCity}&appid=${KEY}&units=metric`
@@ -21,8 +24,10 @@ function App() {
                 .then(response => response.json())
                 .then(data => {
                     setLoading(false);
-                    if (data.cod === 200) {
+                    if (data.cod === 200 || data.cod === "200") {
+                        const newSearches = [submitedCity, ...recentSearches.filter(city => city !== submitedCity)].slice(0, 5);
                         setWeather(data);
+                        setRecentSearches(newSearches);
                         setError(null);
                     } else {
                         setError(data.message);
@@ -33,15 +38,16 @@ function App() {
             fetch(forecastApi)
                 .then(response => response.json())
                 .then(data => {
-                    const dailyForecast = data.list.filter((item, index) => {
-                        if (index === 0) return true;
-                        if (index % 8 === 0) {
-                            return true;
-                        }
-                        else false;
-                    })
-                    console.log(dailyForecast);
-                    setForecast(dailyForecast);
+                    if (data.cod === "200" || data.cod === 200) {
+                        const dailyForecast = data.list.filter((item, index) => {
+                            if (index === 0) return true;
+                            if (index % 8 === 0) {
+                                return true;
+                            }
+                            else return false;
+                        })
+                        setForecast(dailyForecast);
+                    }
                 })
         }
     }, [submitedCity])
@@ -49,10 +55,9 @@ function App() {
     return (
         <div className="min-h-screen bg-gray-50">
             <div className="container mx-auto px-4 py-6 md:py-5 max-w-6xl">
-                {/* Remove md:p-10 and min-h-screen from this div */}
                 <div className="flex items-center flex-col gap-6 w-full">
-                    <SearchForm onSubmit={setSubmitedCity} />
-
+                    <SearchForm onSubmit={setSubmitedCity} currentCity={submitedCity} />
+                    <SearchesDisplay searches={recentSearches} onSelect={setSubmitedCity} />
                     {loading && (
                         <div className="flex items-center justify-center p-4">
                             <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-500"></div>

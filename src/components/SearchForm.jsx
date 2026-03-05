@@ -1,12 +1,18 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
-export default function SearchForm({ onSubmit }) {
+export default function SearchForm({ onSubmit, currentCity }) {
     const [city, setCity] = useState('');
+
+    useEffect(() => {
+        if (currentCity) {
+            setCity(currentCity);
+        }
+    }, [currentCity])
+
     const handleSubmit = (event) => {
         event.preventDefault();
         onSubmit(city);
     }
-
     return (
         <form onSubmit={handleSubmit} className="w-full max-w-2xl">
             <div className="flex flex-col sm:flex-row items-center gap-3 p-2">
