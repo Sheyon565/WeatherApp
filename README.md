@@ -1,16 +1,33 @@
-# React + Vite
+# 🌤️ Weather App
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A beautiful, responsive weather application built with React that shows current weather and 5-day forecasts for cities worldwide.
 
-Currently, two official plugins are available:
+![Weather App Screenshot](./src/assets/WeatherAppSS.png) *(You'll need to add a screenshot)*
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## ✨ Features
 
-## React Compiler
+- 🔍 **City Search** - Search for any city worldwide
+- 🌡️ **Current Weather** - Temperature, conditions, humidity, wind speed
+- 📅 **5-Day Forecast** - Daily weather predictions
+- 🎨 **Dynamic Backgrounds** - Colors change based on weather conditions
+- ⏳ **Loading States** - Visual feedback during API calls
+- ❌ **Error Handling** - Friendly messages for invalid cities
+- 📱 **Responsive Design** - Works perfectly on mobile, tablet, and desktop
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## 🛠️ Technologies Used
 
-## Expanding the ESLint configuration
+- **React** - UI library
+- **Tailwind CSS** - Styling
+- **OpenWeatherMap API** - Weather data
+- **Vite** - Build tool and development server
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+## 🚀 Live Demo
+
+[View Live Demo](https://weatherapps-sheyon.netlify.app/)
+
+## 🏗️ Installation & Setup
+
+1. **Clone the repository**
+   ```bash
+   git clone https://github.com/Sheyon565/weather-app.git
+   cd weather-app
