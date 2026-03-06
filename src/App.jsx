@@ -18,39 +18,74 @@ function App() {
     const forecastApi = `https://api.openweathermap.org/data/2.5/forecast?q=${submitedCity}&appid=${KEY}&units=metric`
 
     useEffect(() => {
+        const getSavedSearches = localStorage.getItem('history');
+        const savedSearches = JSON.parse(getSavedSearches);
+        if (savedSearches) {
+            setRecentSearches(savedSearches);
+        }
+    }, [])
+
+    useEffect(() => {
         if (submitedCity) {
-            setLoading(true);
-            fetch(apiUrl)
-                .then(response => response.json())
-                .then(data => {
-                    setLoading(false);
-                    if (data.cod === 200 || data.cod === "200") {
+            const loadWeather = async () => {
+                setLoading(true);
+
+                try {
+                    const promise = [
+                        requestWeatherData(apiUrl),
+                        requestWeatherData(forecastApi)
+                    ]
+
+                    const [weatherResult, forecastResult] = await Promise.allSettled(promise);
+
+                    if (weatherResult.status === 'fulfilled' && (weatherResult.value.cod === 200 || weatherResult.value.cod === "200")) {
                         const newSearches = [submitedCity, ...recentSearches.filter(city => city !== submitedCity)].slice(0, 5);
-                        setWeather(data);
+                        setWeather(weatherResult.value);
                         setRecentSearches(newSearches);
-                        setError(null);
+                        setError(null)
                     } else {
-                        setError(data.message);
                         setWeather(null);
+                        if (weatherResult.status === 'rejected') {
+                            setError("Failed to fetch weather data");
+                        } else {
+                            setError(weatherResult.value.message);
+                        }
                     }
-                })
-                .catch(error => console.log("error", error))
-            fetch(forecastApi)
-                .then(response => response.json())
-                .then(data => {
-                    if (data.cod === "200" || data.cod === 200) {
-                        const dailyForecast = data.list.filter((item, index) => {
-                            if (index === 0) return true;
-                            if (index % 8 === 0) {
-                                return true;
-                            }
-                            else return false;
-                        })
+
+                    if (forecastResult.status === 'fulfilled' && (forecastResult.value.cod === 200 || forecastResult.value.cod === "200")) {
+                        const dailyForecast = forecastResult.value.list.filter((item, index) => {
+                            return index === 0 || index % 8 === 0;
+                        });
                         setForecast(dailyForecast);
+                    } else {
+                        setForecast(null)
                     }
-                })
+
+                } catch (error) {
+                    console.log("Unexpected Error: ", error);
+                    setError("Something went wrong");
+                } finally {
+                    setLoading(false);
+                }
+
+            }
+            loadWeather()
         }
     }, [submitedCity])
+
+    useEffect(() => {
+        if (recentSearches.length > 0) {
+            localStorage.setItem('history', JSON.stringify(recentSearches));
+        } else {
+            localStorage.removeItem('history');
+        }
+    }, [recentSearches])
+
+    async function requestWeatherData(url) {
+        const fetchData = await fetch(url);
+        const data = await fetchData.json();
+        return data;
+    }
 
     return (
         <div className="min-h-screen bg-gray-50">

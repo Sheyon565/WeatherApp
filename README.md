@@ -13,6 +13,7 @@ A beautiful, responsive weather application built with React that shows current 
 - ⏳ **Loading States** - Visual feedback during API calls
 - ❌ **Error Handling** - Friendly messages for invalid cities
 - 📱 **Responsive Design** - Works perfectly on mobile, tablet, and desktop
+- 💾 **Local Storage** - History persists between sessions
 
 ## 🛠️ Technologies Used
 
